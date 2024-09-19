@@ -1,9 +1,13 @@
 import Route from '@ember/routing/route';
+import { service } from '@ember/service';
 
 export default class PeoplePersonRoute extends Route {
-  model(params) {
+  @service person;
+  async model(params) {
     const people = this.modelFor('people');
 
-    return people.find((person) => person.name === params.id);
+    const person = people.find((person) => person.name === params.id);
+
+    return await this.person.loadPerson(person.url);
   }
 }

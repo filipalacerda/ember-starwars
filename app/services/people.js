@@ -1,4 +1,5 @@
 import Service from '@ember/service';
+import Person from 'starwars/models/person';
 
 export default class PeopleService extends Service {
   people = [];
@@ -12,11 +13,18 @@ export default class PeopleService extends Service {
       (response) => response.json(),
     );
 
-    this.people = request.results;
-    // for (let person of request.results) {
-    //   this.people.push(person);
-    // }
+    for (let person of request.results) {
+      this.people.push(new Person(person));
+    }
 
     return this.people;
+  }
+
+  add(record) {
+    const recordIds = this.people.map((record) => record.id);
+
+    if (!recordIds.includes(record.id)) {
+      this.people.push(record);
+    }
   }
 }
