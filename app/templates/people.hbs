@@ -1,0 +1,13 @@
+{{page-title "People"}}
+<h2>People</h2>
+
+<ul>
+  {{#each @model as |person|}}
+    <li><LinkTo
+        @route="people.person"
+        @model={{person.name}}
+      >{{person.name}}</LinkTo></li>
+  {{/each}}
+</ul>
+
+{{outlet}}
